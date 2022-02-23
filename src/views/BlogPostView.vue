@@ -6,8 +6,9 @@ import { useRoute } from "vue-router";
 const blog = useBlogStore();
 
 onMounted(async () => {
-  const id = route.params.id;
-  await blog.fetchArt(id);
+  let id = route.params.id as string;
+  let intId = parseInt(id);
+  await blog.fetchArt(intId);
 });
 const route = useRoute();
 //const props = defineProps<{}>();

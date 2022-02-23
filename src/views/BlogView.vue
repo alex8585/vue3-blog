@@ -9,8 +9,10 @@ onMounted(async () => {
   await blog.fetchArts();
 });
 
-function seeMoreHandler(id) {
-  router.push({ path: `/blog/${id}`, replace: true });
+function seeMoreHandler(id: number | undefined) {
+  if (id) {
+    router.push({ path: `/blog/${id}`, replace: true });
+  }
 }
 </script>
 
@@ -19,10 +21,12 @@ function seeMoreHandler(id) {
   <ul>
     <li v-for="art in blog.items" :key="art.id">
       <q-card class="my-card">
-        <q-img :src="getUrlFromMedia(art.media[0].original_url)">
+        <q-img :src="getUrlFromMedia(art?.media?.[0]?.original_url as string)">
           <div class="absolute-bottom">
             <div class="text-h6">{{ art.title }}</div>
-            <div class="text-subtitle2">{{ shorten(art.description, 5) }}</div>
+            <div class="text-subtitle2">
+              {{ shorten(art.description as string, 5) }}
+            </div>
           </div>
         </q-img>
         <q-card-actions>
